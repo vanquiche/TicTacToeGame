@@ -1,0 +1,45 @@
+* {
+  box-sizing: border-box;
+}
+#title {
+  margin: 1rem 0 1rem 0;
+}
+.headingTxt {
+  text-align: center;
+  font-size: 2rem;
+}
+.mainWrapper {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: center;
+  background-color: aqua;
+}
+.boardContainer {
+  height: 400px;
+  width: 400px;
+  background-color: lightblue;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 10px;
+}
+.squares {
+  height: 100px;
+  width: 100px;
+  background-color: chocolate;
+}
+.playerContainer {
+  display: flex;
+  justify-content: center;
+  background-color: beige;
+  width: 200px;
+  padding: 1rem;
+}
+#buttonContainer {
+  background-color: burlywood;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+}
+.btn {
+  margin: 0 10px 0 10px;
+}
