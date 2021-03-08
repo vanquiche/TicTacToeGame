@@ -21,18 +21,30 @@
   display: grid;
   grid-template-columns: repeat(3, auto);
   gap: 10px;
+  justify-content: center;
+  align-content: center;
 }
-.squares {
-  height: 100px;
-  width: 100px;
+.square {
+  height: 127px;
+  width: 127px;
   background-color: chocolate;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-family: sans-serif;
+  font-size: 2em;
 }
+
 .playerContainer {
   display: flex;
   justify-content: center;
   background-color: beige;
   width: 200px;
   padding: 1rem;
+}
+.blue {
+  color: red;
 }
 #buttonContainer {
   background-color: burlywood;
