@@ -20,10 +20,10 @@ const player = (name, mark) => {
     return (turn = state);
   }
   function setScore(num) {
-    score = num;
+    score += num;
   }
   function getScore() {
-    return score;
+    return 'score: ' + score;
   }
   return {
     //public
@@ -45,17 +45,30 @@ const controller = (() => {
   const restartBtn = document.getElementById('restartGameBtn');
   const p1Container = document.getElementById('playerOneContainer');
   const p2Container = document.getElementById('playerTwoContainer');
+  const noticeSign = document.getElementById('noticeContainer');
+  const message = document.getElementById('message');
+  const block = document.getElementById('blockCover');
+  const p1Score = document.getElementById('p1ScoreTxt');
+  const p2Score = document.getElementById('p2ScoreTxt');
 
   // event listeners
   // start button
   startBtn.addEventListener('click', () => {
+    clearBoard();
     startGame();
-    startBtn.disabled = true;
+    noticeSign.classList.add('shrink');
+    block.classList.add('hide');
   });
   // restart button
   restartBtn.addEventListener('click', () => {
     clearBoard();
-    startBtn.disabled = false;
+    startGame();
+    noticeSign.classList.add('shrink');
+  });
+  window.addEventListener('load', () => {
+    noticeSign.classList.remove('shrink');
+    message.innerText = 'Start a New Match!';
+    block.classList.remove('hide');
   });
 
   function startGame() {
@@ -64,30 +77,28 @@ const controller = (() => {
       case 0:
         p1.setTurn(true);
         playerMark = 'X';
-        console.log('player one turn');
         p1Container.classList.add('blue');
         break;
       case 1:
         p2.setTurn(true);
         playerMark = 'O';
-        console.log('player two turn');
         p2Container.classList.add('blue');
         break;
     }
+    // update score
+    p1Score.innerText = `${p1.getScore()}`;
+    p2Score.innerText = `${p2.getScore()}`;
   }
   function clearBoard() {
-    let restart = confirm('restart game?');
-    if (restart === false) return;
-    else if (restart === true) {
-      for (let i = 0; i < board.length; i++) {
-        let id = i;
-        document.getElementById(id).innerText = '';
-        board[i] = '';
-      }
-      p1.setTurn(false);
-      p2.setTurn(false);
-      switchTurn('');
+    for (let i = 0; i < board.length; i++) {
+      let id = i;
+      document.getElementById(id).innerText = '';
+      document.getElementById(id).classList.remove('highlight');
+      board[i] = '';
     }
+    p1.setTurn(false);
+    p2.setTurn(false);
+    switchTurn('');
   }
 
   function switchTurn(mark) {
@@ -116,20 +127,20 @@ const controller = (() => {
   }
   function checkWin(mark) {
     let win = false;
-    let conditions = [
+    const conditions = [
       // row
       [0, 1, 2],
       [3, 4, 5],
       [6, 7, 8],
-      // column
       [0, 3, 6],
       [1, 4, 7],
       [2, 5, 8],
-      // diagonal
       [0, 4, 8],
-      [2, 4, 6]
+      [2, 4, 6],
     ];
     let position = [];
+    let winningPosition = [];
+    let player;
     // find position of mark on board
     for (let i = 0; i < board.length; i++) {
       if (board[i] === mark) {
@@ -137,17 +148,30 @@ const controller = (() => {
       }
       // compare against winning conditions
       for (let j = 0; j < conditions.length; j++) {
-        if (conditions[j].every((item) => position.includes(item)) === true) win = true;
+        if (conditions[j].every((item) => position.includes(item)) === true) {
+          winningPosition.push(...conditions[j]);
+          win = true;
+        }
       }
     }
+    mark === 'X' ? player = 'Player One' : player = 'Player Two';
+    let lightSquare = position.filter(item => winningPosition.includes(item));
     if (win === true) {
       playerMark = '';
       p1.setTurn(false);
       p2.setTurn(false);
-      alert(mark + ' you win');
+      mark === 'X' ? p1.setScore(1) : p2.setScore(1);
+      noticeSign.classList.remove('shrink');
+      block.classList.remove('hide');
+      message.innerText = player + ' wins! \n Play again?';
+      highlightSquare(lightSquare);
     }
   }
-
+  function highlightSquare(arr) {
+    for (let i = 0; i < arr.length; i++) {
+      document.getElementById(arr[i]).classList.add('highlight');
+    }
+  }
   return {
     switchTurn,
   };
@@ -162,7 +186,6 @@ const gameBoard = (() => {
       square.classList = 'square';
       square.id = i;
       boardContainer.appendChild(square);
-
       // event listener
       // board squares
       square.addEventListener('click', () => {

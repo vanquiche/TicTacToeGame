@@ -9,22 +9,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="reset.css">
   <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Catamaran&display=swap" rel="stylesheet"> 
 </head>
 
 <body>
-  <h1 id='title' class='headingTxt'>Tic-Tac-Toe</h1>
-  <!-- main wrapper -->
-  <div id='mainContainer' class='mainWrapper'>
-    <!-- player one container -->
-    <div id='playerOneContainer' class='playerContainer'>Player One</div>
-    <!-- game board -->
-    <div id='gameBoard' class='boardContainer'></div>
-    <!-- player two container -->
-    <div id='playerTwoContainer' class='playerContainer'>Player Two</div>
-  </div>
-  <div id='buttonContainer'class=''>
-  <button id='startGameBtn' class='btn'>Start</button>
-  <button id='restartGameBtn' class='btn'>Restart</button>
+  <div id='blockCover' class='blockout hide'></div>
+  <div id='holder'>
+    <h1 id='title' class='headingTxt'>Tic-Tac-Toe</h1>
+    <!-- notification sign  -->
+    <div id='noticeContainer' class='sign shrink'>
+      <!-- Start New Game? -->
+      <p id='message' class='text'></p>
+      <div id='startGameBtn' class='btn'>Play</div>
+    </div>
+    <!-- main wrapper -->
+    <div id='mainContainer' class='gameWrapper'>
+      <!-- game board -->
+      <div id='gameBoard' class='boardContainer'></div>
+    </div>
+    <div id='infoContainer' class=''>
+      <!-- player one container -->
+      <div id='playerOneContainer' class='playerContainer'>PLAYER ONE
+        <p id='p1ScoreTxt' class='scoreTxt'></p>
+        <span class='marker'>X</span>
+      </div>
+      <div id='' class='btnContainer'>
+        <div id='restartGameBtn' class='btn'>Restart</div>
+        <!-- <button id='endGame' class='btn'>restart</button> -->
+      </div>
+      <!-- player two container -->
+      <div id='playerTwoContainer' class='playerContainer'>PLAYER TWO
+        <p id='p2ScoreTxt' class='scoreTxt'></p>
+        <span class='marker'>O</span>
+      </div>
+    </div>
   </div>
   <script src="script.js"></script>
 </body>
