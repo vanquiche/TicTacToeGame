@@ -2,22 +2,22 @@
   box-sizing: border-box;
 }
 #title {
-  margin: 1rem 0 1rem 0;
+  margin: 1em 0 1em 0;
 }
 .headingTxt {
   text-align: center;
-  font-size: 2rem;
+  font-size: 2em;
 }
 .mainWrapper {
   display: grid;
   grid-template-columns: repeat(3, auto);
   justify-content: center;
-  background-color: aqua;
+  /* background-color: aqua; */
 }
 .boardContainer {
   height: 400px;
   width: 400px;
-  background-color: lightblue;
+  /* background-color: lightblue; */
   display: grid;
   grid-template-columns: repeat(3, auto);
   gap: 10px;
@@ -34,21 +34,22 @@
   color: white;
   font-family: sans-serif;
   font-size: 2em;
+  cursor: pointer;
 }
 
 .playerContainer {
   display: flex;
   justify-content: center;
-  background-color: beige;
+  /* background-color: beige; */
   width: 200px;
-  padding: 1rem;
+  padding: 1em;
 }
 .blue {
   color: red;
 }
 #buttonContainer {
-  background-color: burlywood;
-  padding: 0.5rem;
+  /* background-color: burlywood; */
+  padding: 0.5em;
   display: flex;
   justify-content: center;
 }

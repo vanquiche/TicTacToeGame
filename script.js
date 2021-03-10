@@ -76,7 +76,7 @@ const controller = (() => {
     }
   }
   function clearBoard() {
-    let restart = confirm('restart?');
+    let restart = confirm('restart game?');
     if (restart === false) return;
     else if (restart === true) {
       for (let i = 0; i < board.length; i++) {
@@ -98,6 +98,7 @@ const controller = (() => {
         playerMark = 'O';
         p2Container.classList.add('blue');
         p1Container.classList.remove('blue');
+        checkWin('X');
         break;
       case 'O':
         p2.setTurn(false);
@@ -105,11 +106,45 @@ const controller = (() => {
         playerMark = 'X';
         p1Container.classList.add('blue');
         p2Container.classList.remove('blue');
+        checkWin('O');
         break;
       case '':
         playerMark = '';
         p1Container.classList.remove('blue');
         p2Container.classList.remove('blue');
+    }
+  }
+  function checkWin(mark) {
+    let win = false;
+    let conditions = [
+      // row
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      // column
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      // diagonal
+      [0, 4, 8],
+      [2, 4, 6]
+    ];
+    let position = [];
+    // find position of mark on board
+    for (let i = 0; i < board.length; i++) {
+      if (board[i] === mark) {
+        position.push(i);
+      }
+      // compare against winning conditions
+      for (let j = 0; j < conditions.length; j++) {
+        if (conditions[j].every((item) => position.includes(item)) === true) win = true;
+      }
+    }
+    if (win === true) {
+      playerMark = '';
+      p1.setTurn(false);
+      p2.setTurn(false);
+      alert(mark + ' you win');
     }
   }
 
@@ -118,7 +153,7 @@ const controller = (() => {
   };
 })();
 
-// GAME BOARD MODULE 
+// GAME BOARD MODULE
 const gameBoard = (() => {
   const boardContainer = document.getElementById('gameBoard');
   function createBoard() {
@@ -135,27 +170,9 @@ const gameBoard = (() => {
         board[square.id] = playerMark;
         square.innerText = `${board[square.id]}`;
         controller.switchTurn(playerMark);
-        // checkWin();
       });
     }
   }
 
-  function checkWin() {
-    // check board array for specific pattern
-    // if either X or O meets the pattern then match is won
-
-    // horizontal
-    [0, 1, 2]
-    [3, 4, 5]
-    [6, 7, 8]
-    // vertical
-    [0, 3, 6]
-    [1, 4, 7]
-    [2, 5, 8]
-    // diagonal
-    [0, 4, 8]
-    [6, 4, 2]
-
-  }
   createBoard();
 })();
