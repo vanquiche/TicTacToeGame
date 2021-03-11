@@ -179,3 +179,11 @@ body {
 .scoreTxt {
   font-family: Catamaran;
 }
+#footer {
+  position: fixed;
+  bottom: 8px;
+  left: 15px;
+  font-family: monospace;
+  font-size: 1.2em;
+  color: tomato;
+}

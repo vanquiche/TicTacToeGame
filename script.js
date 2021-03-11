@@ -172,7 +172,6 @@ const controller = (() => {
     }
   }
   function winningSquares(arr) {
-    console.log(arr)
     for (let i = 0; i < arr.length; i++) {
       document.getElementById(arr[i]).classList.add('highlight');
     }
