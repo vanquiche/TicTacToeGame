@@ -38,6 +38,7 @@ const player = (name, mark) => {
 const p1 = player('Player One', 'X');
 const p2 = player('Player Two', 'O');
 
+
 // GAME CONTROLLER MODULE
 const controller = (() => {
   // variables
@@ -50,6 +51,7 @@ const controller = (() => {
   const block = document.getElementById('blockCover');
   const p1Score = document.getElementById('p1ScoreTxt');
   const p2Score = document.getElementById('p2ScoreTxt');
+  let counter = 0;
 
   // event listeners
   // start button
@@ -99,6 +101,7 @@ const controller = (() => {
     p1.setTurn(false);
     p2.setTurn(false);
     switchTurn('');
+    counter = 0;
   }
 
   function switchTurn(mark) {
@@ -126,9 +129,12 @@ const controller = (() => {
     }
   }
   function checkWin(mark) {
-    let win = false;
+    let win = null;
+    counter += 1;
+    let position = [];
+    let player;
+    let squares;
     const conditions = [
-      // row
       [0, 1, 2],
       [3, 4, 5],
       [6, 7, 8],
@@ -138,9 +144,6 @@ const controller = (() => {
       [0, 4, 8],
       [2, 4, 6],
     ];
-    let position = [];
-    let winningPosition = [];
-    let player;
     // find position of mark on board
     for (let i = 0; i < board.length; i++) {
       if (board[i] === mark) {
@@ -149,25 +152,27 @@ const controller = (() => {
       // compare against winning conditions
       for (let j = 0; j < conditions.length; j++) {
         if (conditions[j].every((item) => position.includes(item)) === true) {
-          winningPosition.push(...conditions[j]);
           win = true;
+          squares = conditions.slice(j, j + 1).flat();
         }
       }
     }
     mark === 'X' ? player = 'Player One' : player = 'Player Two';
-    let lightSquare = position.filter(item => winningPosition.includes(item));
     if (win === true) {
-      playerMark = '';
-      p1.setTurn(false);
-      p2.setTurn(false);
       mark === 'X' ? p1.setScore(1) : p2.setScore(1);
+      winningSquares(squares);
       noticeSign.classList.remove('shrink');
       block.classList.remove('hide');
       message.innerText = player + ' wins! \n Play again?';
-      highlightSquare(lightSquare);
+    }
+    if (counter === 9 && win === null) {
+      noticeSign.classList.remove('shrink');
+      block.classList.remove('hide');
+      message.innerText = `Cat's game. Meow! \n Play again?`;
     }
   }
-  function highlightSquare(arr) {
+  function winningSquares(arr) {
+    console.log(arr)
     for (let i = 0; i < arr.length; i++) {
       document.getElementById(arr[i]).classList.add('highlight');
     }
